@@ -10,6 +10,7 @@
 #
 # 최대한 적은 약수터를 들르면서 올라가야 하고, 마지막에 산 정상인 26km 지점의 약수터를 들르면 성공적인 등산입니다.
 
+# 최적 부분 구조 문제
 def select_stops(water_stops, capacity):
     rest_water = capacity
     point_list = []
@@ -33,7 +34,7 @@ def select_stops(water_stops, capacity):
 
     return point_list
 
-#다른 방법
+#Greedy Algorithm- 항상 가능한 먼 약수터로 가는 것이 가장 좋은 선택
 def select_stops2(water_stops, capacity):
     # 약수터 위치 리스트
     stop_list = []
