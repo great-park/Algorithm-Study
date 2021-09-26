@@ -1,31 +1,19 @@
 #include <stdio.h>
-#include <string.h>
 
-int main(void) {
-	int t;
-	scanf("%d", &t);
+int SquareByValue(int);
 
-	int room[15];
-	int i, j;
-	int h = 0;
-
-	while (h < t) {
-		scanf("%d", &i);
-		scanf("%d", &j);
-		int floor = 0;
-		for (int a = 0; a < 14; a++) {
-			room[a] = a;
-		}
-		while (floor < i) {
-			for (k = 2; k <= j; k++) {
-				room[k] += room[k - 1];
-			}
-			floor++;
-		}
-		printf("%d\n", room[j]);
-		h++;
-	}
-
-
+int main(void)
+{
+	int a;
+	printf("양의 정수를 입력하시오 : ");
+	scanf("%d", a);
+	SquareByValue(a);
 	return 0;
+}
+
+int SquareByValue(int x) {
+
+	x *= x;
+
+	printf("Value 함수 제곱 : %d", x);
 }
