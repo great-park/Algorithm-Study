@@ -17,7 +17,7 @@ int main(void) {
 			printf("%d\n",room);
 		}
 		else
-		{
+		{w
 			int a = n / h + 1; // È£
 			int b = n % h; //Ãþ
 			room = b * 100 + a;
