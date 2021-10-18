@@ -13,6 +13,7 @@ void bubblesort(int start, int end){
 		}else if(a[j]==a[j+2]){
 			if(a[j+1]>a[j+3]){
 				swap(a[j+1],a[j+3]);
+				swap(a[j],a[j+2]);
 			}
 		}
 	}
