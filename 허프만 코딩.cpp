@@ -15,6 +15,9 @@ int maxId = 0;
 char str[10000];
 int strId = -1;
 
+char ans[10000][10000];
+int input[10000];
+
 void insertHeap(Node* cur)
 {
 	maxId++;
@@ -22,7 +25,7 @@ void insertHeap(Node* cur)
 
 	int id = maxId;
 	int parent = id / 2;
-	
+
 	while (parent >= 1)
 	{
 		if (heap[parent]->freq > heap[id]->freq)
@@ -120,7 +123,7 @@ void search(Node* cur, char x)
 
 	if (cur->left == 0 && cur->right == 0)
 	{
-		printf("%s\n", str);
+		strcpy(ans[cur->freq],str);
 	}
 	else
 	{
@@ -143,6 +146,7 @@ int main()
 	{
 		int input_freq;
 		scanf("%d", &input_freq);
+		input[i] = input_freq;
 		Node* newNode = (Node*)malloc(sizeof(Node));
 		newNode->freq = input_freq;
 		newNode->left = newNode->right = 0;
@@ -168,10 +172,14 @@ int main()
 		insertHeap(newNode);
 	}
 
-	//순회
+	//순회s
 
 	search(x_node->left, '0');
 	search(x_node->right, '1');
-
 	
+	for (int i = 0; i < cnt; i++)
+	{
+		printf("%s\n",ans[input[i]]);
+	}
+
 }
