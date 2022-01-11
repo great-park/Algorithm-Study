@@ -45,6 +45,27 @@ int main() {
 	}
 
 	printf("\n");
+	
+	//°æ·Î 
+	printf("1 -> %d : ", N);
+	
+	int track[105], size = 0;
+	for (int i = 1; i <= N; i++) {
+		if (queue[i] == N) {
+			int t = i;
+
+			while (t != -1) {
+				track[size++] = queue[t];
+				t = origin[t];
+			}
+		}
+	}
+	for (int i = size - 1; i >= 0; i--) {
+		printf("%d ", track[i]);
+	}
+	
+	printf("\n"); 
+
 
 	printf("DFS : ");
    
@@ -66,7 +87,7 @@ int main() {
       }
       top--;
    }
-
+	printf("\n");
 	
 	printf("DFS2 : ");
 	dfs(1);
