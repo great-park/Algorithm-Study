@@ -12,9 +12,8 @@ while queue:
     answer.append(queue.popleft())
 
 print("<", end='')
-
 for i in range(N-1):
-    print(str(answer[i])+", ", end='')
+    print(str(answer[i])+", ", end='')  # +는 문자열 끼리만 가능, 쉼표와 달리 공백이 추가되지 않음
 print(answer[N-1], end='')
 
 print(">")
