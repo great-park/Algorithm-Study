@@ -1,0 +1,14 @@
+from array import ArrayType, array
+from platform import mac_ver
+
+
+n = int(input())
+array = set(map(int, input().split()))
+m = int(input())
+x = set(map(int, input().split()))
+
+for i in x:
+    if i not in array:
+        print('0')
+    else:
+        print('1')
