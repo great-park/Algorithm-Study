@@ -3,48 +3,34 @@ import sys
 input = list(sys.stdin.readline().split(' '))
 N, M, block_num = int(input[0]), int(input[1]), int(input[2])
 ground = [0 for _ in range(N)]
-time = 0
 
 for i in range(N):
     ground[i] = list(map(int, sys.stdin.readline().split(' ')))
 
 
-def dig():  # 최상층인 층부터 1층만 제거하는 함수
-    # max에 해당되는 인덱스 구해서 1씩 빼주기
-    global time, block_num
-    for i in range(N):
-        max_value = max(ground[i])
-        max_id = [id for id, value in enumerate(
-            ground[i]) if value == max_value]
-        for id in max_id:
-            ground[id] -= 1
-            block_num += 1
-    time += 2
+leastTime = 1e9
 
+# 3중 for문으로 height로 높이 맞추고, 각 층마다 최소 시간인지 확인후 갱신
+for height in range(257):
+    fill_up = 0
+    dig = 0
+    for x in range(N):
+        for y in range(M):
+            if ground[x][y] < height:
+                fill_up += height - ground[x][y]
+            else:
+                dig += ground[x][y] - height
+    if fill_up > dig + block_num:
+        continue
+    time = 2*dig + fill_up
 
-def fill_up():
-    global time, ground
+    if leastTime >= time:
+        leastTime = time
+        final_height = height
 
-    time += 1
-
-
-def complete():
-    temp_list = list()
-    for i in range(3):
-        # set 타입으로 변경해서 길이가 1 이상이면 다른 값이 들어있음!
-        temp = set(ground[i])
-        if len(temp) != 1:
-            return False
-        temp_list.append(temp.pop())
-    temp_list = set(temp_list)
-    if len(temp_list) != 1:
-        return False
-    return True
-
-
-def make():
-    while not complete():
-        if block_num == 0:
-            dig()
-        else:
-            # 채우냐 파냐 어떻게 판단??
+print(leastTime, final_height)
+"""
+코드에서는 3중 for문을 돌지만 실제로는 최대 높이가 257개(0 포함), 
+행렬의 최대 사이즈는 250,000이므로 
+256 * 250,000 = 64,250,000 이므로 충분히 1초만에 모든 경우를 계산
+"""
