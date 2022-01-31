@@ -18,12 +18,14 @@ def dig():  # 최상층인 층부터 1층만 제거하는 함수
             ground[i]) if value == max_value]
         for id in max_id:
             ground[id] -= 1
-            time += 2
             block_num += 1
+    time += 2
 
 
 def fill_up():
-    return
+    global time, ground
+
+    time += 1
 
 
 def complete():
