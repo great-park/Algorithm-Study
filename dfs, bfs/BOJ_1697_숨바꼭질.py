@@ -2,7 +2,7 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-# 범위 계산에 사용할 MAX값 선언
+# 범위 계산에 사용할 MAX값 선언 - N,K의 최댓값
 MAX = 10**5
 
 
