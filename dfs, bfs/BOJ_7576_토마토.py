@@ -31,15 +31,15 @@ for i in range(H):
 BFS()
 
 cannot_complete = False
-max_num = 0
+day = 0
 for i in range(H):
     for j in range(N):
         for k in range(M):
             if graph[i][j][k] == 0:
                 cannot_complete = True
-            max_num = max(max_num, graph[i][j][k])
+            day = max(day, graph[i][j][k])
 
 if cannot_complete:
     print(-1)
 else:
-    print(max_num-1)
+    print(day-1)
