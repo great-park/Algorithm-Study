@@ -4,29 +4,42 @@ input = sys.stdin.readline
 
 M, N, H = map(int, input().split())
 graph = [[list(map(int, input().split())) for _ in range(N)] for _ in range(H)]
-print(graph)
-# dx = [0, 0, 1, -1, 0 ,0]
-# dy = [1, -1, 0, 0, 0 ,0]
-# dz = [0, 0, 0, 0, 1, -1]
-# day = 0
-# queue = deque()
 
-# def BFS():
-#     while queue:
-#         x, y, z = queue.popleft()
-#         for i in range(6):
-#             nx, ny, nz = x + dx[i], y + dy[i], z + dz[i]
-#             if 0 <= nx < N and 0 <= ny < M and 0 <= nz < H:
-#                 if graph[nx][ny][nz] == 0:
-#                     graph[nz][nx][ny] = graph[z][x][y]+1
-#                     queue.append((nx, ny, nz))
-
-#                 elif graph[nx][ny] == 0:
-#                     # 익은 토마토의 인접한 토마토는 다음 날 익는다. 아직 방문 안 함.
-#                     graph[nx][ny] = 1
-
-#     day += 1
+dx = [0, 0, 1, -1, 0, 0]
+dy = [1, -1, 0, 0, 0, 0]
+dz = [0, 0, 0, 0, 1, -1]
+queue = deque()
 
 
-# for i in range(M):
-#     for j in range(N*H):
+def BFS():
+    while queue:
+        z, x, y = queue.popleft()
+        for i in range(6):
+            nx, ny, nz = x + dx[i], y + dy[i], z + dz[i]
+            if 0 <= nx < N and 0 <= ny < M and 0 <= nz < H:
+                if graph[nz][nx][ny] == 0:
+                    graph[nz][nx][ny] = graph[z][x][y]+1
+                    queue.append((nz, nx, ny))
+
+
+# 탐색은 입력의 반대순으로
+for i in range(H):
+    for j in range(N):
+        for k in range(M):
+            if graph[i][j][k] == 1:
+                queue.append((i, j, k))
+BFS()
+
+cannot_complete = False
+max_num = 0
+for i in range(H):
+    for j in range(N):
+        for k in range(M):
+            if graph[i][j][k] == 0:
+                cannot_complete = True
+            max_num = max(max_num, graph[i][j][k])
+
+if cannot_complete:
+    print(-1)
+else:
+    print(max_num-1)
