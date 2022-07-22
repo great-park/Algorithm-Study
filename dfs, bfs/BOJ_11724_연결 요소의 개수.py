@@ -26,6 +26,7 @@ def DFS(x):
 
 
 cnt = 0
+
 for i in range(1, N+1):
     if not visited[i]:
         DFS(i)
