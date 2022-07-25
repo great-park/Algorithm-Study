@@ -1,37 +1,93 @@
+import heapq
 import sys
-from collections import deque
-input = sys.stdin.readline
+read = sys.stdin.readline
 
-T = int(input())
-
-
-def deque_sort(queue):
-    return deque(sorted(queue))
-
-
-def solve():
-    queue = deque()
-    k = int(input())
-    for _ in range(k):
-        operator, value = input().split()
-        value = int(value)
-        if operator == 'I':
-            queue.append(value)
-            queue = deque_sort(queue)
+result = []
+for T in range(int(read())):
+    visited = [False]*1_000_001
+    minH, maxH = [], []
+    for i in range(int(read())):
+        s = read().split()
+        if s[0] == 'I':
+            heapq.heappush(minH, (int(s[1]), i))
+            heapq.heappush(maxH, (-int(s[1]), i))
+            visited[i] = True
+        elif s[1] == '1':
+            while maxH and not visited[maxH[0][1]]:
+                heapq.heappop(maxH)
+            if maxH:
+                visited[maxH[0][1]] = False
+                heapq.heappop(maxH)
         else:
-            if len(queue) == 0:
-                continue
-            elif value == 1:
-                queue.pop()
-            else:
-                queue.popleft()
-    if len(queue) == 0:
-        print('empty')
-    else:
-        max_value = max(queue)
-        min_value = min(queue)
-        print(max_value, min_value)
+            while minH and not visited[minH[0][1]]:
+                heapq.heappop(minH)
+            if minH:
+                visited[minH[0][1]] = False
+                heapq.heappop(minH)
+    while minH and not visited[minH[0][1]]:
+        heapq.heappop(minH)
+    while maxH and not visited[maxH[0][1]]:
+        heapq.heappop(maxH)
+    result.append(f'{-maxH[0][0]} {minH[0][0]}'if maxH and minH else'EMPTY')
+print('\n'.join(result))
 
 
-for _ in range(T):
-    solve()
+# import sys
+# import heapq
+
+# t = int(sys.stdin.readline())
+
+# # 테스트 케이스만큼 반복한다.
+# for _ in range(t):
+#     k = int(sys.stdin.readline())
+#     heap_max = []
+#     heap_min = []
+#     visited = [False] * k # 정수 여부
+
+#     # 반복문을 통행 연산을 수행한다.
+#     for i in range(k):
+#         a, b = map(str, sys.stdin.readline().split())
+
+#         # 삽입 연산
+#         if a == "I":
+#             heapq.heappush(heap_max, (-int(b), i)) # 최대 힙
+#             heapq.heappush(heap_min, (int(b), i)) # 최소 힙
+#             visited[i] = True # 정수 생성
+
+#         # 제거 연산
+#         else:
+#             # 최대 힙 제거
+#             if b == "1":
+#                 # 반복문을 통해 이미 제거 된 정수는 팝하여 제거
+#                 while heap_max and visited[heap_max[0][1]] == False:
+#                     heapq.heappop(heap_max)
+
+#                 # 최대 힙이 있으면 최대 힙 제거
+#                 if heap_max:
+#                     visited[heap_max[0][1]] = False
+#                     heapq.heappop(heap_max)
+
+#             # 최소 힙 제거
+#             else:
+#                 # 반복문을 통해 이미 제거된 정수는 팝하여 제거
+#                 while heap_min and visited[heap_min[0][1]] == False:
+#                     heapq.heappop(heap_min)
+
+#                 # 최소 힙이 있으면 최소 힙 제거
+#                 if heap_min:
+#                     visited[heap_min[0][1]] = False
+#                     heapq.heappop(heap_min)
+
+#     # 정수가 없다면 "EMPTY" 출력
+#     if True not in visited:
+#         print("EMPTY")
+#     else:
+#         # 정수가 있다면
+#         # 연산이 끝난 후 제거 되지 못한 최대 힙과 최소 힙을 팝하여 제거
+#         while heap_max and visited[heap_max[0][1]] == False:
+#             heapq.heappop(heap_max)
+#         while heap_min and visited[heap_min[0][1]] == False:
+#             heapq.heappop(heap_min)
+
+#         # 최대 힙, 최소 힙 출력
+#         print(-heap_max[0][0], heap_min[0][0])
