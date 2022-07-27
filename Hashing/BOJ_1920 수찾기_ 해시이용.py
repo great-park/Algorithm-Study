@@ -1,7 +1,3 @@
-from array import ArrayType, array
-from platform import mac_ver
-
-
 n = int(input())
 array = set(map(int, input().split()))
 m = int(input())
