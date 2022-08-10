@@ -13,7 +13,7 @@ def solve(depth):
         print(''.join(map(str, ans)))
         return
     for i in range(depth, C):
-        if visited[i] == 0:
+        if visited[i] == 0:  # 중복 체크
             if len(ans) == 0:
                 ans.append(pwd[i])
                 visited[i] = 1
@@ -21,7 +21,7 @@ def solve(depth):
                 ans.pop()
                 visited[i] = 0
             else:
-                if ans[-1] < pwd[i]:
+                if ans[-1] < pwd[i]:  # 오름차순
                     ans.append(pwd[i])
                     visited[i] = 1
                     solve(depth+1)
@@ -30,12 +30,12 @@ def solve(depth):
 
 
 def checkA(list):
-    flag1 = False
-    flag2 = False
-    cnt = 0
+    flag1, flag2, cnt = False, False, 0
     for x in list:
+        # 모음
         if x in ['a', 'e', 'i', 'o', 'u']:
             flag1 = True
+        # 자음
         else:
             cnt += 1
     if cnt >= 2:
