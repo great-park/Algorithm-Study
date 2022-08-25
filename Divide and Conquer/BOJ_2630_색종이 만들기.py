@@ -1,12 +1,6 @@
 from sys import stdin
 input = stdin.readline
 N = int(input())  # 2의 배수
-"""
-초기 : 하얀색 = n*n개, 파란색 = 0개
-
-파란색 - 위치에 따라서 하얀색 색종이 갯수가 달라짐
-1 4 8 16 32 64 128
-"""
 graph = [list(map(int, input().split())) for _ in range(N)]
 
 white_cnt = 0
