@@ -28,20 +28,18 @@ def getDistance():
         distance = 1e9
         for id, (cx, cy) in ans:
             distance = min(distance, abs(hx-cx)+abs(hy-cy))
-        x += distance
+        x += distance  # x는 모든 집에 대한 치킨 거리
     distance_list.append(x)
 
 
-# 치킨집을 하나씩 추가하면서 M개가 되었을 때 추가
 def solve(depth):
     if depth == M:
-        getDistance()
+        getDistance()  # 치킨집을 하나씩 추가하면서 M개가 되었을 때 추가
         return
 
     for id, (cx, cy) in enumerate(chickens):
-        if not visited[cx][cy]:
-            # 이전 solve에서 검토한 치킨 집은 건너뛰어도 됨
-            if ans and id < ans[-1][0]:
+        if not visited[cx][cy]:  # 방문 안 한 치킨집에 대하여
+            if ans and id < ans[-1][0]:  # 이전 solve에서 검토한 치킨 집은 건너뛰어도 됨
                 continue
             visited[cx][cy] = 1
             ans.append((id, (cx, cy)))
