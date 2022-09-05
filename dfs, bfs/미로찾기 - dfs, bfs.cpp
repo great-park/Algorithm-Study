@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct xy {
+typedef struct xy
+{
 	int x, y;
 } XY;
 
-typedef struct node {
+typedef struct node
+{
 	int value;
-	struct node* left, * right;
+	struct node *left, *right;
 } Node;
 
 int n, m;
@@ -19,33 +21,40 @@ int sx, sy;
 int fx, fy;
 
 int isPrint = 0;
-//dfs
-void dfs(int x, int y) 
+// dfs
+void dfs(int x, int y)
 {
-	if (isPrint == 1) return;
-	if (x < 0 || y < 0 || x >= n || y >= m) return;
-	if (miro[x][y] == '#') return;
-	if (check[x][y] == 1) return;
+	if (isPrint == 1)
+		return;
+	if (x < 0 || y < 0 || x >= n || y >= m)
+		return;
+	if (miro[x][y] == '#')
+		return;
+	if (check[x][y] == 1)
+		return;
 
-	check[x][y] = 1; // To do : ¹æ¹®Çß´ø ¼ø¼­·Î ¸¸µé±â
+	check[x][y] = 1; // To do : ï¿½æ¹®ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	if (miro[x][y] == 'F') {
-		//Ãâ·Â
+	if (miro[x][y] == 'F')
+	{
+		//ï¿½ï¿½ï¿½
 		isPrint = 1;
-		printf("dfs °á°ú");
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		printf("dfs ï¿½ï¿½ï¿½");
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
 				printf("%d", check[i][j]);
 			}
 			printf("\n");
 		}
 		/*exit(0);
-		 isPrint ¹æ½Ä ´ë½Å exit ÇÔ¼ö »ç¿ë
+		 isPrint ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ exit ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
 		*/
 		return;
 	}
-	
-	// Á¶°Ç¹®À¸·Î #ÀÌ ¾Æ´Ò¶§¸¸ Àç±Í È£ÃâÇÏ´Â ½ÄÀ¸·Îµµ °¡´É
+
+	// ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ #ï¿½ï¿½ ï¿½Æ´Ò¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½
 	dfs(x + 1, y);
 	dfs(x - 1, y);
 	dfs(x, y + 1);
@@ -56,14 +65,18 @@ void dfs(int x, int y)
 int bfs()
 {
 	int front = 0, rear = 0;
-	XY start = { sx,sy };
+	XY start = {sx, sy};
 	Queue[rear++] = start;
 	b_check[sx][sy] = 1;
-	while (front != rear) {
-		printf("bfs °á°ú");
-		if (miro[Queue[front].x][Queue[front].y] == 'F') {
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < m; j++) {
+	while (front != rear)
+	{
+		printf("bfs ï¿½ï¿½ï¿½");
+		if (miro[Queue[front].x][Queue[front].y] == 'F')
+		{
+			for (int i = 0; i < n; i++)
+			{
+				for (int j = 0; j < m; j++)
+				{
 					printf("%3d", b_check[i][j]);
 				}
 				printf("\n");
@@ -71,29 +84,37 @@ int bfs()
 			return;
 		}
 		int tx, ty;
-		tx = Queue[front].x + 1; ty = Queue[front].y;
-		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m)) {
+		tx = Queue[front].x + 1;
+		ty = Queue[front].y;
+		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m))
+		{
 			Queue[rear].x = tx;
 			Queue[rear].y = ty;
 			rear++;
-			b_check[tx][ty] = b_check[Queue[front].x][Queue[front].y] +1;
+			b_check[tx][ty] = b_check[Queue[front].x][Queue[front].y] + 1;
 		}
-		tx = Queue[front].x - 1; ty = Queue[front].y;
-		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m)) {
+		tx = Queue[front].x - 1;
+		ty = Queue[front].y;
+		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m))
+		{
 			Queue[rear].x = tx;
 			Queue[rear].y = ty;
 			rear++;
 			b_check[tx][ty] = 1;
 		}
-		tx = Queue[front].x; ty = Queue[front].y+1;
-		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m)) {
+		tx = Queue[front].x;
+		ty = Queue[front].y + 1;
+		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m))
+		{
 			Queue[rear].x = tx;
 			Queue[rear].y = ty;
 			rear++;
 			b_check[tx][ty] = 1;
 		}
-		tx = Queue[front].x; ty = Queue[front].y-1;
-		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m)) {
+		tx = Queue[front].x;
+		ty = Queue[front].y - 1;
+		if (miro[tx][ty] != '#' && b_check[tx][ty] == 0 && (0 <= tx && tx < n && 0 <= ty && ty < m))
+		{
 			Queue[rear].x = tx;
 			Queue[rear].y = ty;
 			rear++;
@@ -103,30 +124,33 @@ int bfs()
 		front++;
 	}
 
-	printf("bfs ¹æ¹ý Á¸ÀçÇÏÁö ¾Ê´Â´Ù.");
+	printf("bfs ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.");
 }
 
-
-//bfs Àç±Í ¹æ½Ä
-int main() 
+// bfs ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+int main()
 {
 	int n, m;
 	scanf("%d %d", &n, &m);
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) {
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
 			scanf(" %c", &miro[i][j]);
-			if (miro[i][j] == 'S') {
-				sx = i; sy = j;
+			if (miro[i][j] == 'S')
+			{
+				sx = i;
+				sy = j;
 			}
 
-			if (miro[i][j] == 'F') {
-				fx = i; fy = j;
+			if (miro[i][j] == 'F')
+			{
+				fx = i;
+				fy = j;
 			}
 		}
 	}
 	dfs(sx, sy);
 
 	bfs();
-
-
 }
