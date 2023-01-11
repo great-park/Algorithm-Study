@@ -1,4 +1,6 @@
-public import java.util.*;
+import java.util.*;
+
+import static java.util.Collections.max;
 
 class Solution {
     static int[] dx = {0, 0, 1, -1};
@@ -43,21 +45,22 @@ class Solution {
     }
 
     public static int bfs(int R, int C, int[][] dist, String[][] city, int start_x, int start_y){
-        Queue<Pair> qu = new LinkedList<>();
-        qu.offer(new Pair(start_x, start_y));
+        Stack<Pair> qu = new Stack<Pair>();
+        qu.push(new Pair(start_x, start_y));
         dist[start_y][start_x] = 0;
         ArrayList<String> gift = new ArrayList<>();
         gift.add(city[start_y][start_x]);
 
+        Set<Integer> counts = new HashSet<>();
         while (!qu.isEmpty()) {
-            Pair p = qu.poll();
+            Pair p = qu.pop();
 
             for (int i = 0; i < 4; i++) {
                 int nX = p.x + dx[i];
                 int nY = p.y + dy[i];
 
                 // 범위 아웃
-                if (nX < 0 || nX >= C - 1 || nY < 0 || nY >= R - 1) {
+                if (nX < 0 || nX >= C  || nY < 0 || nY >= R ) {
                     continue;
                 }
                 // 이미 방문
@@ -68,12 +71,14 @@ class Solution {
                 if (gift.contains(city[nY][nX])) {
                     continue;
                 }
-                qu.offer(new Pair(nX, nY));
+                qu.push(new Pair(nX, nY));
                 dist[nY][nX] = dist[p.y][p.x] + 1;
                 gift.add(city[nY][nX]);
             }
+            counts.add(gift.size());
         }
-        return gift.size();
+
+        return max(counts);
     }
 
     // 큐에 좌표를 넣어주기 위한 클래스
