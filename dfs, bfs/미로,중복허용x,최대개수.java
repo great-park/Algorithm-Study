@@ -28,17 +28,13 @@ class Solution {
             }
             
             int final_result = 0;
-            for (int i = 0; i < R; i++) {
-                for (int j = 0; j < C; j++) {
-                    int temp = bfs(R,C,dist,city,j,i);
+                    int temp = bfs(R,C,dist,city,0,0);
                     if (temp >= final_result) final_result = temp;
                     for (int n = 0; n < R; n++) {
                         for (int k = 0; k < C; k++) {
                             dist[n][k] = -1;
                         }
                     }
-                }
-            }
 
             System.out.println("#"+test_case+" "+final_result);
         }
