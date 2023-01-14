@@ -16,6 +16,7 @@ for _ in range(M):
         operator, num = temp[0], int(temp[1]) - 1
 
         if operator == 'add':
+            # web editor test
             # num 자리만 1로 만들고 나머지는 0, 이것과 or 연산
             # => 기존 bit에서 num 자리만 1로 바뀐다
             bit |= (1 << num)
