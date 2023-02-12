@@ -2,7 +2,7 @@ from sys import stdin
 input = stdin.readline
 N, M, R = map(int, input().split())
 data = [list(map(int, input().split())) for _ in range(N)]
-inst = map(int, input().split())
+inst = list(map(int, input().split()))
 
 
 def solve(x):
@@ -40,24 +40,42 @@ def solve(x):
         return temp2
 
     if x == 5:
-        for i in range(N//2):
-            for j in range(M//2):
-                temp[i][j+M//2] = data[i][j]  # 1->2
+        for i in range(N//2):  # 1과 2영역을 각각 2와 3으로 보낸다.
+            for j in range(M//2):  # 1
+                temp[i][j+M//2] = data[i][j]
 
-            for k in range(M//2, M):
-                temp[i+N//2][k] = data[i][k]  # 2->3
+            for k in range(M//2, M):  # 2
+                temp[i+N//2][k] = data[i][k]
 
-        for i in range(N//2, N):
-            for j in range(M//2):
-                temp[i-N//2][k] = data[i][j]  # 4->1
+        for i in range(N//2, N):  # 3과 4영역을 각각 4와 1으로 보낸다.
+            for j in range(M//2):  # 4
+                temp[i-N//2][j] = data[i][j]
 
-            for k in range(M//2, M):
-                temp[i][j-M//2] = data[i][k]
+            for k in range(M//2, M):  # 3
+                temp[i][k-M//2] = data[i][k]
+        return temp
+
+    if x == 6:
+        for i in range(N//2):  # 1과 2영역을 각각 4와 1으로 보낸다.
+            for j in range(M//2):  # 1
+                temp[i+N//2][j] = data[i][j]
+
+            for k in range(M//2, M):  # 2
+                temp[i][k-M//2] = data[i][k]
+
+        for i in range(N//2, N):  # 3과 4영역을 각각 2와 3으로 보낸다.
+            for j in range(M//2):  # 4
+                temp[i][j+M//2] = data[i][j]
+
+            for k in range(M//2, M):  # 3
+                temp[i-N//2][k] = data[i][k]
         return temp
 
 
-for ins in inst:
-    data = solve(ins)
+for x in inst:
+    data = solve(x)
+    if x == 3 or x == 4:
+        N, M = M, N
 
 for row in data:
     print(*row)
